@@ -1,0 +1,12 @@
+[
+  {"prompt":"what is the weather tomorrow in sydney", "type":"irrelevant"},
+  {"prompt":"tell me a short joke", "type":"irrelevant"},
+  {"prompt":"good morning", "type":"irrelevant"},
+  {"prompt":"thanks", "type":"irrelevant"},
+  {"prompt":"what time is it now", "type":"irrelevant"},
+  {"prompt":"how many days until next month", "type":"irrelevant"},
+  {"prompt":"remind me to drink water", "type":"irrelevant"},
+  {"prompt":"summarize my day quickly", "type":"irrelevant"},
+  {"prompt":"what is 19 times 7", "type":"irrelevant"},
+  {"prompt":"say hello", "type":"irrelevant"}
+]

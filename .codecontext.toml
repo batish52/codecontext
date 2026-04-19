@@ -1,0 +1,148 @@
+# ---------------------------------------------------------------------------
+# CodeContext example configuration
+# ---------------------------------------------------------------------------
+# Copy this file to the root of your project as `.codecontext.toml` and edit
+# the sections that apply to you. Every field below is optional — CodeContext
+# ships with sensible defaults and will work with an empty file.
+#
+# Secrets (API keys) are NEVER stored here. Instead, set `api_key_env` to the
+# name of the environment variable that holds your key, and CodeContext will
+# read it at call time. This keeps keys out of git history and crash dumps.
+# ---------------------------------------------------------------------------
+
+
+# ===========================================================================
+# Project scanning
+# ===========================================================================
+# Which files CodeContext indexes. Globs are evaluated in order. Sensible
+# defaults already exclude .git, node_modules, build artifacts, binaries,
+# and the .codecontext/ data directory itself.
+
+# include = ["**/*"]
+# exclude = ["vendor/**", "fixtures/**", "*.generated.py"]
+
+# Hard cap on individual file size (bytes). Files larger than this are
+# skipped to keep the index fast.
+# max_file_bytes = 512000
+
+
+# ===========================================================================
+# Retrieval & context packing
+# ===========================================================================
+# Default token budget for the context pack the gateway sends to the LLM.
+# Smaller budgets = cheaper requests but less context. 4000 is a reasonable
+# starting point for code Q&A; raise for large refactors.
+# default_context_budget_tokens = 4000
+
+# Whether to use semantic embeddings on top of BM25. Requires the
+# `codecontext[embeddings]` extra (sentence-transformers). If the extra is
+# not installed CodeContext falls back to BM25-only retrieval automatically.
+# enable_embeddings = true
+
+# Hard cap on escalation cost per single request, in USD. Requests whose
+# estimated external-LLM cost exceeds this are routed locally or blocked.
+# This is the primary safety rail against runaway spend.
+# max_escalation_cost_per_request = 0.08
+
+
+# ===========================================================================
+# LLM client — pick ONE of the three [llm_client] blocks below
+# ===========================================================================
+# The gateway speaks every provider's HTTP API directly using urllib, so you
+# do NOT need to install the openai or anthropic SDKs. `enabled = false` (the
+# default) means the gateway returns the outbound payload without calling an
+# external model — useful for dry runs and CI.
+
+
+# ---- Option A: OpenAI --------------------------------------------------
+# Cheapest starting point. `gpt-4o-mini` is the default and is priced at
+# $0.15 input / $0.60 output per 1M tokens.
+#
+# Before running:
+#   export OPENAI_API_KEY="sk-..."
+
+[llm_client]
+enabled       = true
+provider      = "openai"
+model         = "gpt-4o-mini"
+api_key_env   = "OPENAI_API_KEY"
+max_tokens    = 1024
+temperature   = 0.2
+timeout_seconds = 60.0
+
+
+# ---- Option B: Anthropic ----------------------------------------------
+# Swap in by commenting out [llm_client] above and uncommenting this block.
+# Claude Haiku is the cheapest tier; Sonnet is the balanced default.
+#
+# Before running:
+#   export ANTHROPIC_API_KEY="sk-ant-..."
+
+# [llm_client]
+# enabled       = true
+# provider      = "anthropic"
+# model         = "claude-3-5-haiku-20241022"
+# api_key_env   = "ANTHROPIC_API_KEY"
+# max_tokens    = 1024
+# temperature   = 0.2
+# timeout_seconds = 60.0
+# anthropic_version = "2023-06-01"
+
+
+# ---- Option C: Ollama (fully local, free) -----------------------------
+# Point CodeContext at a local Ollama server. No API key needed. Perfect for
+# privacy-sensitive work or offline development. Pricing stays $0.
+#
+# Before running:
+#   ollama pull llama3.1:8b
+#   ollama serve
+
+# [llm_client]
+# enabled       = true
+# provider      = "ollama"
+# model         = "llama3.1:8b"
+# base_url      = "http://127.0.0.1:11434"
+# max_tokens    = 1024
+# temperature   = 0.2
+# timeout_seconds = 120.0   # local models are usually slower than APIs
+
+
+# ---- Option D: OpenAI-compatible endpoint (vLLM, LM Studio, Groq,
+#      Together, Fireworks, DeepSeek, a RunPod-hosted Qwen, etc.) -------
+# Any server that speaks the OpenAI /v1/chat/completions shape works here.
+# Set base_url to the server's /v1 root. api_key_env is optional: if the
+# server doesn't require auth, leave it unset or point at an empty variable.
+
+# [llm_client]
+# enabled       = true
+# provider      = "openai_compatible"
+# model         = "Qwen/Qwen3-32B-FP8"
+# base_url      = "https://your-runpod-endpoint.proxy.runpod.net/v1"
+# api_key_env   = "RUNPOD_API_KEY"   # optional
+# max_tokens    = 1024
+# temperature   = 0.2
+
+
+# ===========================================================================
+# Pricing overrides (advanced, all providers)
+# ===========================================================================
+# If you've negotiated custom rates, self-host, or use a model CodeContext
+# doesn't recognise, override the per-1M-token pricing here. Format:
+# "model-prefix" = [input_usd_per_1m, output_usd_per_1m]. Prefix match is
+# longest-wins.
+
+# [llm_client.pricing]
+# "gpt-4o-mini"           = [0.15, 0.60]
+# "claude-3-5-sonnet"     = [3.00, 15.00]
+# "Qwen/Qwen3-32B-FP8"    = [0.00, 0.00]   # self-hosted, compute tracked elsewhere
+
+
+# ===========================================================================
+# Extra headers (advanced)
+# ===========================================================================
+# Sent with every LLM request. Useful for routing/tagging through a proxy
+# like Helicone or LiteLLM.
+
+# [llm_client.extra_headers]
+# "Helicone-Auth"         = "Bearer ${HELICONE_API_KEY}"
+# "Helicone-Property-App" = "codecontext"

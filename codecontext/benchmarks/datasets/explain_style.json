@@ -1,0 +1,12 @@
+[
+  {"prompt":"explain how local-first is saving tokens and if it is currently live", "type":"explain_style"},
+  {"prompt":"explain architecture tradeoffs in the local-first runtime interceptor", "type":"explain_style"},
+  {"prompt":"how does SearchEngine BM25 and symbol retrieval interact", "type":"explain_style"},
+  {"prompt":"why does local-only reduce external API cost", "type":"explain_style"},
+  {"prompt":"explain compaction strategy for outbound context", "type":"explain_style"},
+  {"prompt":"how does escalation discipline decide external vs local", "type":"explain_style"},
+  {"prompt":"explain benchmark leakage audit interpretation", "type":"explain_style"},
+  {"prompt":"why can pass-through still be valid in product flow", "type":"explain_style"},
+  {"prompt":"explain continuation run_id guard behavior", "type":"explain_style"},
+  {"prompt":"architecture overview of product API surface", "type":"explain_style"}
+]
