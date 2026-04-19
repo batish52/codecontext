@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 # TODO: verify availability on PyPI before first publish. If "codecontext" is
 # taken, candidates: "codecontext-gateway", "codecontext-ai", "ccontext".
-name = "codecontext"
+name = "promptrouter"
 version = "0.1.0"
 description = "LLM cost optimization gateway — route prompts locally, compact context for the rest, track real savings."
 readme = "README.md"
