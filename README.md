@@ -30,15 +30,15 @@ It's built for engineers shipping AI-assisted tools, not for dashboards people.
 ## Install
 
 ```bash
-pip install codecontext
+pip install promptrouter
 ```
 
 Optional extras:
 
 ```bash
-pip install codecontext[embeddings]   # semantic retrieval (sentence-transformers)
-pip install codecontext[tokens]       # precise token counts (tiktoken)
-pip install codecontext[all]          # both of the above
+pip install promptrouter[embeddings]   # semantic retrieval (sentence-transformers)
+pip install promptrouter[tokens]       # precise token counts (tiktoken)
+pip install promptrouter[all]          # both of the above
 ```
 
 CodeContext itself has **one** required dependency (`pathspec`). Everything else is lazy-loaded and optional. The gateway speaks to OpenAI and Anthropic over plain HTTP — no SDK install needed.
