@@ -259,6 +259,31 @@ The ledger behind every report is real: real tokens reported by the provider, re
 
 ---
 
+## TypeScript / JavaScript support (v0.2.0)
+
+The AST parser handles `.ts`, `.tsx`, `.js`, `.jsx` files with zero additional dependencies:
+
+- ES module imports (`import { x } from './file'`, `export default`, re-exports)
+- CommonJS `require()` calls
+- Function declarations, arrow functions, class methods
+- Cross-file call graph tracing (caller → callee across imports)
+- Type imports (`import type { X } from './file'`)
+
+```bash
+# Index a React/TS + Node project
+codecontext index-ast --root .
+
+# Trace who calls a function across TS/JS files
+codecontext callers-of --query "fetchData"
+
+# What depends on this module?
+codecontext dependents-of --path "src/utils/math.ts"
+
+# Impact analysis — what breaks if I change this file?
+codecontext impact-analysis --path "src/utils/math.ts"
+```
+
+
 ## Licence
 
 MIT — see [LICENSE](./LICENSE). You can use CodeContext freely in commercial and private projects. Paid tiers bundle support, priority fixes, and proprietary benchmark datasets; the code itself is and will remain MIT.
