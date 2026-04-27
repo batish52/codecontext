@@ -1,0 +1,12 @@
+[
+  {"prompt":"runtime startup completed?", "type":"operational_debug"},
+  {"prompt":"any stalled pipeline signals in local-first runtime", "type":"operational_debug"},
+  {"prompt":"is interceptor idle or doing nothing", "type":"operational_debug"},
+  {"prompt":"check zero-work zero-symbols behavior", "type":"operational_debug"},
+  {"prompt":"traceback in logs for local-first plugin", "type":"operational_debug"},
+  {"prompt":"route mix summary for runtime_operational_debug", "type":"operational_debug"},
+  {"prompt":"fallback status of latest explain prompt", "type":"operational_debug"},
+  {"prompt":"runtime status and process state now", "type":"operational_debug"},
+  {"prompt":"check logs for startup noise loops", "type":"operational_debug"},
+  {"prompt":"cross-signal runtime diagnosis summary", "type":"operational_debug"}
+]
