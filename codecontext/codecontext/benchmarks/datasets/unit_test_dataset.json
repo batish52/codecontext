@@ -1,1 +1,0 @@
-[{"prompt": "check logs for the local-first runtime", "type": "plugin_runtime"}, {"prompt": "what is the weather tomorrow", "type": "irrelevant"}, {"prompt": "explain architecture tradeoffs across microservices", "type": "explain_style"}]
